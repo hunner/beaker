@@ -172,7 +172,7 @@ module Beaker
         end
       end
 
-      #Create the Higgs install command string based upon the host and options settings.  Installation command will be run as a 
+      #Create the Higgs install command string based upon the host and options settings.  Installation command will be run as a
       #background process.  The output of the command will be stored in the provided host['higgs_file'].
       # @param [Host] host The host that Higgs is to be installed on
       #                    The host object must have the 'working_dir', 'dist' and 'pe_installer' field set correctly.
@@ -508,7 +508,7 @@ module Beaker
       # @param  [Hash{Symbol=>Symbol, String}] opts The options
       # @option opts [String] :pe_dir Default directory or URL to pull PE package from
       #                  (Otherwise uses individual hosts pe_dir)
-      # @option opts [String] :pe_ver Default PE version to install 
+      # @option opts [String] :pe_ver Default PE version to install
       #                  (Otherwise uses individual hosts pe_ver)
       # @raise [StandardError] When installation times out
       #
@@ -643,7 +643,7 @@ module Beaker
       #                                       Puppet via gem.
       # @option opts [String] :release The major release of the OS
       # @option opts [String] :family The OS family (one of 'el' or 'fedora')
-      # 
+      #
       # @return nil
       # @api private
       def install_puppet_from_rpm( host, opts )
@@ -670,7 +670,7 @@ module Beaker
       # @option opts [String] :version The version of Puppet to install, if nil installs latest version
       # @option opts [String] :facter_version The version of Facter to install, if nil installs latest version
       # @option opts [String] :hiera_version The version of Hiera to install, if nil installs latest version
-      # 
+      #
       # @return nil
       # @api private
       def install_puppet_from_deb( host, opts )
@@ -708,7 +708,7 @@ module Beaker
       # @param [Hash{Symbol=>String}] opts An options hash
       # @option opts [String] :version The version of Puppet to install, required
       # @option opts [String] :win_download_url The url to download puppet from
-      # 
+      #
       # @return nil
       # @api private
       def install_puppet_from_msi( host, opts )
@@ -716,7 +716,7 @@ module Beaker
         on host, "msiexec /qn /i puppet-#{opts[:version]}.msi"
 
         #Because the msi installer doesn't add Puppet to the environment path
-        if fact_on(host, 'architecture').eql?('x86_64')
+        if host['platform'] =~ /x86_64/
           install_dir = '/cygdrive/c/Program Files (x86)/Puppet Labs/Puppet/bin'
         else
           install_dir = '/cygdrive/c/Program Files/Puppet Labs/Puppet/bin'
@@ -731,7 +731,7 @@ module Beaker
       # @option opts [String] :version The version of Puppet to install, required
       # @option opts [String] :facter_version The version of Facter to install, required
       # @option opts [String] :hiera_version The version of Hiera to install, required
-      # 
+      #
       # @return nil
       # @api private
       def install_puppet_from_dmg( host, opts )
@@ -759,7 +759,7 @@ module Beaker
       # @option opts [String] :version The version of Puppet to install, if nil installs latest
       # @option opts [String] :facter_version The version of Facter to install, if nil installs latest
       # @option opts [String] :hiera_version The version of Hiera to install, if nil installs latest
-      # 
+      #
       # @return nil
       # @raise [StandardError] if gem does not exist on target host
       # @api private
@@ -772,7 +772,7 @@ module Beaker
 
         # Solaris doesn't necessarily have this, but gem needs it
         if host['platform'] =~ /solaris/
-          on host, 'mkdir -p /var/lib' 
+          on host, 'mkdir -p /var/lib'
         end
 
         unless host.check_for_command( 'gem' )
