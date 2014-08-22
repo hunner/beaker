@@ -716,7 +716,7 @@ module Beaker
         on host, "msiexec /qn /i puppet-#{opts[:version]}.msi"
 
         #Because the msi installer doesn't add Puppet to the environment path
-        if host['platform'] =~ /x86_64/
+        if host['platform'] =~ /x86_64/ && opts[:version] !~ /x64/
           install_dir = '/cygdrive/c/Program Files (x86)/Puppet Labs/Puppet/bin'
         else
           install_dir = '/cygdrive/c/Program Files/Puppet Labs/Puppet/bin'
